@@ -2,7 +2,7 @@
   "useAuthentication": false,
   "virtualFolderName": "Not enough wood!",
   "cachingEnabled": true,
-  "cacheValidationTime": 60,
+  "defaultCacheValidationTime": 60,
   "logs": [
     {
       "name": "test",
@@ -11,6 +11,18 @@
     {
       "name": "whoami",
       "command": "whoami"
+    },
+    {
+      "name": "working-system",
+      "command": "journalctl --this-boot"
+    },
+    {
+      "name": "not-working-system",
+      "command": "journalctl"
+    },
+    {
+      "name": "dummy-docker",
+      "command": "docker logs FileFighterREST"
     }
   ]
 }

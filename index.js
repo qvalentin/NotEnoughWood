@@ -14,6 +14,10 @@ const port = 4200;
 // config
 let configJson = null;
 
+// CONSTANTS
+const MAX_BUFFER_ERROR_MESSAGE =
+  "RangeError [ERR_CHILD_PROCESS_STDIO_MAXBUFFER]: stdout maxBuffer length exceeded";
+
 app.get("*", (req, res) => {
   // check authentication.
   if (req.url.includes(".log")) {
@@ -33,27 +37,41 @@ app.get("*", (req, res) => {
         // check cache
         // execute command
         currentLog = logs[0];
-        logger("foundCommand", currentLog.name);
-        if (currentLog.command != null && currentLog.command !== "")
+        logger("found command", currentLog.name);
+        if (currentLog.command != null && currentLog.command !== "") {
           exec(currentLog.command, (err, stdout, stderr) => {
             if (err == null) {
-              res.status(200).send(stdout);
+              res
+                .status(200)
+                .send(
+                  "<pre style='word-wrap: break-word; white-space: pre-wrap;'>" +
+                    stdout +
+                    "</pre>"
+                );
             } else {
               logger(
-                "Encountered Exception while executing ",
-                currentLog.command
+                "Encountered Exception while executing",
+                currentLog.command + " "
               );
-              logger(err, stderr);
-              res
-                .status(500)
-                .send(
-                  "Encountered Exception while executing <b>" +
-                    currentLog.command +
-                    "</b></br>" +
-                    err
-                );
+              if (MAX_BUFFER_ERROR_MESSAGE === err.toString()) {
+                res
+                  .status(500)
+                  .send(
+                    "The command returned to much. Consider making the requested data smaller."
+                  );
+              } else {
+                res
+                  .status(500)
+                  .send(
+                    "Encountered Exception while executing <b>" +
+                      currentLog.command +
+                      "</b></br>" +
+                      err
+                  );
+              }
             }
           });
+        }
       } else {
         res.status(404).send("Could't find a logfile with this name");
       }
@@ -99,5 +117,5 @@ app.listen(port, () => {
       );
     });
   }
-  logger("Server started on: http://localhost:", port);
+  logger("Server started on: http://localhost:" + port);
 });
