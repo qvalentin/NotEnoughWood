@@ -1,4 +1,16 @@
 {
   "useAuthentication": false,
-  "virtualFolderName": "Not enough wood!"
+  "virtualFolderName": "Not enough wood!",
+  "cachingEnabled": true,
+  "cacheValidationTime": 60,
+  "logs": [
+    {
+      "name": "test",
+      "command": "npm -v"
+    },
+    {
+      "name": "whoami",
+      "command": "whoami"
+    }
+  ]
 }
