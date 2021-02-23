@@ -3,10 +3,10 @@ const express = require("express");
 const fs = require("fs");
 const path = require("path");
 const { exit } = require("process");
-const { exec } = require("child_process");
 
 // custom stuff
 const logger = require("./lib/logger");
+const { getLogs } = require("./lib/cacheHandler");
 
 const app = express();
 const port = 4200;
@@ -34,21 +34,23 @@ app.get("*", (req, res) => {
       let logs = configJson.logs;
       logs = logs.filter((l) => l.name === foundFileName[0]);
       if (logs != null && logs.length == 1) {
-        // check cache
-        // execute command
         currentLog = logs[0];
-        logger("found command", currentLog.name);
         if (currentLog.command != null && currentLog.command !== "") {
-          exec(currentLog.command, (err, stdout, stderr) => {
-            if (err == null) {
+          getLogs(
+            currentLog,
+            configJson.cachingEnabled,
+            configJson.defaultCachingTime
+          )
+            .then((content) => {
               res
                 .status(200)
                 .send(
                   "<pre style='word-wrap: break-word; white-space: pre-wrap;'>" +
-                    stdout +
+                    content +
                     "</pre>"
                 );
-            } else {
+            })
+            .catch((err) => {
               logger(
                 "Encountered Exception while executing",
                 currentLog.command + " "
@@ -69,8 +71,7 @@ app.get("*", (req, res) => {
                       err
                   );
               }
-            }
-          });
+            });
         }
       } else {
         res.status(404).send("Could't find a logfile with this name");
