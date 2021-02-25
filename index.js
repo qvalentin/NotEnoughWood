@@ -6,12 +6,15 @@ const { exit } = require("process");
 
 // custom stuff
 const logger = require("./lib/logger");
+const argsHandler = require("./lib/argsHandler");
 const { getLogs } = require("./lib/cacheHandler");
 
 process.title = "NotEnoughWood";
-
 const app = express();
-const port = 4200;
+
+// handle args
+const parsedArgs = argsHandler(process.argv.slice(2));
+const port = parsedArgs.port || 4200;
 
 // config
 let configJson = null;
