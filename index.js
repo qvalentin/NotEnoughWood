@@ -54,8 +54,13 @@ app.get("*", (req, res) => {
                 currentLog.command,
                 nextUpdate
               );
-              res.setHeader("content-type", "text/plain");
-              res.status(200).send(content);
+              res
+                .status(200)
+                .send(
+                  "<pre style='word-wrap: break-word; white-space: pre-wrap;'>" +
+                    content +
+                    "</pre>"
+                );
             })
             .catch((err) => {
               logger(
