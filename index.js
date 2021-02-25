@@ -44,7 +44,7 @@ app.get("*", (req, res) => {
         if (currentLog.command != null && currentLog.command !== "") {
           getLogs(
             currentLog,
-            configJson.cachingEnabled,
+            currentLog.cachingEnabled,
             configJson.defaultCachingTime
           )
             .then(({ content, nextUpdate }) => {

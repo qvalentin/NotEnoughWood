@@ -1,6 +1,8 @@
-Stuff todo:
+# Stuff todo:
 
 - whitespace in log name
-- change port from cli
-- add custom header with info
 - authentication
+
+## problems
+
+- refreshing while requesting log leads to double cache entry
