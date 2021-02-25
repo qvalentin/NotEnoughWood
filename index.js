@@ -8,6 +8,7 @@ const { exit } = require("process");
 const logger = require("./lib/logger");
 const argsHandler = require("./lib/argsHandler");
 const { getLogs } = require("./lib/cacheHandler");
+const applyCustomHeader = require("./lib/customHeader");
 
 process.title = "NotEnoughWood";
 const app = express();
@@ -46,7 +47,13 @@ app.get("*", (req, res) => {
             configJson.cachingEnabled,
             configJson.defaultCachingTime
           )
-            .then((content) => {
+            .then(({ content, nextUpdate }) => {
+              content = applyCustomHeader(
+                content,
+                currentLog.name,
+                currentLog.command,
+                nextUpdate
+              );
               res.setHeader("content-type", "text/plain");
               res.status(200).send(content);
             })
