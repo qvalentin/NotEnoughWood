@@ -45,11 +45,12 @@ function newApp(flags) {
       } else {
         //split .log
         foundFileName = foundFileName[1];
-        foundFileName = foundFileName.split(".log");
+        foundFileName = foundFileName.split(".log")[0];
+        foundFileName = foundFileName.replace(/%20/g, " "); // funny url encoded input.
 
         // compare with logs
         let logs = configJson.logs;
-        logs = logs.filter((l) => l.name === foundFileName[0]);
+        logs = logs.filter((l) => l.name === foundFileName);
         if (logs != null && logs.length == 1) {
           currentLog = logs[0];
           if (currentLog.command != null && currentLog.command !== "") {

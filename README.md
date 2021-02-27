@@ -1,6 +1,5 @@
 # Stuff todo:
 
-- whitespace in log name
 - authentication
 
 ## problems
