@@ -1,13 +1,12 @@
 {
-  "name": "new",
+  "name": "new-log",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
   },
   "author": "open-schnick",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "express": "^4.17.1",
     "meow": "^9.0.0",

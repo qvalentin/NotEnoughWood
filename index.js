@@ -13,7 +13,7 @@ const cli = meow(
 ╚═╝░░╚══╝╚══════╝░░░╚═╝░░░╚═╝░░
 
 Usage
-  $ new <input>
+  $ new-log <input>
 
 Necessary arguements:
   --config, -c  specify the config path
