@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 "use strict";
 const meow = require("meow");
-const newApp = require("./newApp");
+const newApp = require("../newApp");
 
 const cli = meow(
   `

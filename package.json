@@ -1,9 +1,10 @@
 {
   "name": "new-log",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "./newApp.js",
+  "bin": "./bin/index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node bin/index.js"
   },
   "author": "open-schnick",
   "license": "MIT",
