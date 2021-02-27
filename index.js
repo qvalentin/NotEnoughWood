@@ -19,7 +19,8 @@ Necessary arguements:
   --config, -c  specify the config path
   
 Options
-  --port, -p  specify the port
+  --port, -p    specify the port
+  --folder, -f  specify the folder containing the logs. (By default the current working directory)
 
 Examples
   $ new --port 3000
@@ -30,9 +31,14 @@ Examples
         type: "number",
         alias: "p",
       },
+      folder: {
+        type: "string",
+        alias: "f",
+      },
       config: {
         type: "string",
         alias: "c",
+        isRequired: true,
       },
     },
   }

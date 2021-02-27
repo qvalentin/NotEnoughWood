@@ -15,15 +15,17 @@ function newApp(flags) {
 
   // handle args
   let port = 4200;
+  let configPath;
+  let folderPath = "";
+
   if (flags.port != undefined) {
     port = flags.port;
   }
-  let configPath;
-  if (flags.config == undefined) {
-    logger("Didnt find -c config path argument.");
-    exit(1);
-  } else {
+  if (flags.config != undefined) {
     configPath = flags.config;
+  }
+  if (flags.folder != undefined) {
+    folderPath = flags.folder;
   }
 
   // config
@@ -99,7 +101,9 @@ function newApp(flags) {
         }
       }
     } else {
-      handler(req, res, { public: configJson.virtualFolderName });
+      handler(req, res, {
+        public: path.join(folderPath, configJson.virtualFolderName),
+      });
     }
   });
 
@@ -123,8 +127,8 @@ function newApp(flags) {
     }
 
     // create fake folder
-    if (!fs.existsSync(configJson.virtualFolderName)) {
-      fs.mkdir(configJson.virtualFolderName, (err) =>
+    if (!fs.existsSync(path.join(folderPath, configJson.virtualFolderName))) {
+      fs.mkdir(path.join(folderPath, configJson.virtualFolderName), (err) =>
         err ? logger("Couldn't create folder:", err) : null
       );
     }
@@ -134,7 +138,11 @@ function newApp(flags) {
       configJson.logs.forEach((log) => {
         // this does overwrite!
         fs.writeFileSync(
-          path.join(configJson.virtualFolderName, log.name + ".log"),
+          path.join(
+            folderPath,
+            configJson.virtualFolderName,
+            log.name + ".log"
+          ),
           "If you see this something fishy happend."
         );
       });
