@@ -12,20 +12,27 @@ const cli = meow(
 ██║░╚███║███████╗░░╚██╔╝░╚██╔╝░
 ╚═╝░░╚══╝╚══════╝░░░╚═╝░░░╚═╝░░
 
-	Usage
-	  $ new <input>
+Usage
+  $ new <input>
 
-	Options
-	  --port, -p  specify the port
+Necessary arguements:
+  --config, -c  specify the config path
+  
+Options
+  --port, -p  specify the port
 
-	Examples
-	  $ new --port 3000
+Examples
+  $ new --port 3000
 `,
   {
     flags: {
       port: {
         type: "number",
         alias: "p",
+      },
+      config: {
+        type: "string",
+        alias: "c",
       },
     },
   }

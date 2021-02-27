@@ -18,6 +18,13 @@ function newApp(flags) {
   if (flags.port != undefined) {
     port = flags.port;
   }
+  let configPath;
+  if (flags.config == undefined) {
+    logger("Didnt find -c config path argument.");
+    exit(1);
+  } else {
+    configPath = flags.config;
+  }
 
   // config
   let configJson = null;
@@ -99,7 +106,7 @@ function newApp(flags) {
   app.listen(port, () => {
     // read config.
     try {
-      configJson = JSON.parse(fs.readFileSync("config.json", "utf-8"));
+      configJson = JSON.parse(fs.readFileSync(configPath, "utf-8"));
 
       if (
         configJson.virtualFolderName === null ||
@@ -132,7 +139,7 @@ function newApp(flags) {
         );
       });
     }
-    logger("Server started on: http://localhost:" + port);
+    logger("Started on: http://localhost:" + port);
   });
 }
 
