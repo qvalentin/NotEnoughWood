@@ -1,7 +1,7 @@
 {
-  "name": "notenoughwood",
+  "name": "new",
   "version": "1.0.0",
-  "description": "Basic Server Logger",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
+    "meow": "^9.0.0",
     "serve": "^11.3.2"
   }
 }
