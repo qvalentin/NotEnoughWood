@@ -15,7 +15,7 @@ const cli = meow(
 Usage
   $ new-log <input>
 
-Necessary arguements:
+Necessary arguments:
   --config, -c  specify the config path
   
 Options
@@ -23,7 +23,7 @@ Options
   --folder, -f  specify the folder containing the logs. (By default the current working directory)
 
 Examples
-  $ new --port 3000
+  $ new-log --port 3000 --config ./config.json
 `,
   {
     flags: {

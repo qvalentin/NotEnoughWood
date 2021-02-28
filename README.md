@@ -6,8 +6,107 @@
 
 - refreshing while requesting log leads to double cache entry
 
-## Installing
+## Docu (wip)
 
-- clone
-- `npm i -g ./`
-- `new-log -c config.json`
+<i>NotEnoughWood - A simple logger for your commands.</i></br>
+Show the results of commands in the web. No need for a ssh session to check the log files.
+
+```shell script
+███╗░░██╗███████╗░██╗░░░░░░░██╗
+████╗░██║██╔════╝░██║░░██╗░░██║
+██╔██╗██║█████╗░░░╚██╗████╗██╔╝
+██║╚████║██╔══╝░░░░████╔═████║░
+██║░╚███║███████╗░░╚██╔╝░╚██╔╝░
+╚═╝░░╚══╝╚══════╝░░░╚═╝░░░╚═╝░░
+NotEnoughWood v1.0
+Created by open-schnick
+
+--------------------------------------
+Logfile: whoami.log
+Command: whoami
+Caching is disabled for this command.
+--------------------------------------
+
+open-schnick
+```
+
+## Install
+
+Just install new-log globally
+
+```shell script
+npm install -g new-log
+```
+
+## Usage
+
+```shell script
+# new-log --help
+
+███╗░░██╗███████╗░██╗░░░░░░░██╗
+████╗░██║██╔════╝░██║░░██╗░░██║
+██╔██╗██║█████╗░░░╚██╗████╗██╔╝
+██║╚████║██╔══╝░░░░████╔═████║░
+██║░╚███║███████╗░░╚██╔╝░╚██╔╝░
+╚═╝░░╚══╝╚══════╝░░░╚═╝░░░╚═╝░░
+
+Usage
+$ new-log <input>
+
+Necessary arguments:
+--config, -c  specify the config path
+
+Options
+--port, -p    specify the port
+--folder, -f  specify the folder containing the logs. (By default the current working directory)
+
+Examples
+$ new --port 3000 --config ./config.json
+```
+
+### --config
+
+The core work to do to run new is to create a config file</br>
+The config file contains various key to configure the service.</br>
+A sample config file:
+
+```json
+{
+  "useAuthentication": false,
+  "virtualFolderName": "Not enough wood!",
+  "defaultCachingTime": 10,
+  "logs": [
+    {
+      "name": "test",
+      "command": "npm -v",
+      "cachingTime": 3600
+    },
+    {
+      "name": "whoami",
+      "command": "whoami",
+      "cachingEnabled": false
+    }
+  ]
+}
+```
+
+- <b>useAuthentication</b> - require authentication to access the log files.
+- <b>virtualFolderName</b> - the name of the folder containing the logs. (This will appear in the web interface)
+- <b>defaultCachingTime</b> - the default time in seconds to cache log results.
+- <b>logs</b> - log objects need <i>name</i> and <i>command</i> keys, other keys shown are optional. All keys:
+  - <b>name</b> - name of the log / log file (any string)
+  - <b>command</b> - the command to execute in the shell (any string)
+  - <b>cachingTime</b> (optional) - custom caching time for the log. Also in seconds (any number)
+  - <b>cachingEnabled</b> (optional) - en/disble caching for the log. (any boolean)
+
+### --port
+
+Specify a custom port for the web interface. Defaults to port 4200.
+
+### --folder
+
+Specify a different directory for the logs (this will contain the folder with the name specified by the <i>virtualFolderName</i> key.
+
+### --help
+
+Show a little help message.
