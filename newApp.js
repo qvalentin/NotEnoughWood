@@ -76,7 +76,7 @@ function newApp(flags) {
         //split .log
         foundFileName = foundFileName[1];
         foundFileName = foundFileName.split(".log")[0];
-        foundFileName = foundFileName.replace(/%20/g, " "); // funny url encoded input.
+        foundFileName = decodeURIComponent(foundFileName);
 
         // compare with logs
         let logs = configJson.logs;

@@ -18,15 +18,15 @@
       "cachingEnabled": false
     },
     {
-      "name": "working-system",
+      "name": "working system",
       "command": "journalctl --this-boot"
     },
     {
-      "name": "not-working-system",
+      "name": "not working system",
       "command": "journalctl"
     },
     {
-      "name": "dummy-docker",
+      "name": "dummy docker",
       "command": "docker logs FileFighterREST"
     }
   ]
