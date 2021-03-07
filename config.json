@@ -1,7 +1,11 @@
 {
-  "useAuthentication": false,
   "virtualFolderName": "Not enough wood!",
   "defaultCachingTime": 10,
+  "authentication": {
+    "enabled": true,
+    "username": "user",
+    "password": "1234"
+  },
   "logs": [
     {
       "name": "test",

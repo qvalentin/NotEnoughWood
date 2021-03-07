@@ -1,8 +1,9 @@
 const handler = require("serve-handler");
+const auth = require("basic-auth");
 const express = require("express");
 const fs = require("fs");
 const path = require("path");
-const { exit } = require("process");
+const { exit, config } = require("process");
 
 // custom stuff
 const logger = require("./lib/logger");
@@ -35,8 +36,37 @@ function newApp(flags) {
   const MAX_BUFFER_ERROR_MESSAGE =
     "RangeError [ERR_CHILD_PROCESS_STDIO_MAXBUFFER]: stdout maxBuffer length exceeded";
 
+  app.use((req, res, next) => {
+    if (
+      configJson &&
+      configJson.authentication &&
+      configJson.authentication.enabled
+    ) {
+      let credentials = auth(req);
+
+      // Check credentials
+      if (!credentials || !check(credentials.name, credentials.pass)) {
+        res.statusCode = 401;
+        res.setHeader("WWW-Authenticate", "Basic realm='NEWloggerRealm'");
+        res.end("Access denied");
+      } else {
+        next();
+      }
+    } else {
+      next();
+    }
+  });
+
+  function check(name, pass) {
+    var valid = true;
+
+    valid = name === configJson.authentication.username && valid;
+    valid = pass === configJson.authentication.password && valid;
+
+    return valid;
+  }
+
   app.get("*", (req, res) => {
-    // check authentication.
     if (req.url.includes(".log")) {
       let foundFileName = req.url.split("/");
       if (foundFileName.length != 2) {
@@ -144,7 +174,7 @@ function newApp(flags) {
             configJson.virtualFolderName,
             log.name + ".log"
           ),
-          "If you see this something fishy happend."
+          "If you are seeing this, something fishy happend."
         );
       });
     }

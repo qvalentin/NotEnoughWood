@@ -1,12 +1,11 @@
-# Stuff todo:
-
-- authentication
-
 ## problems
 
 - refreshing while requesting log leads to double cache entry
+- url encoded path
 
 ## Docu (wip)
+
+# NotEnoughWood - NEW
 
 <i>NotEnoughWood - A simple logger for your commands.</i></br>
 Show the results of commands in the web. No need for a ssh session to check the log files.
@@ -72,9 +71,13 @@ A sample config file:
 
 ```json
 {
-  "useAuthentication": false,
   "virtualFolderName": "Not enough wood!",
   "defaultCachingTime": 10,
+  "authentication": {
+    "enabled": true,
+    "username": "user",
+    "password": "1234"
+  },
   "logs": [
     {
       "name": "test",
@@ -90,9 +93,11 @@ A sample config file:
 }
 ```
 
-- <b>useAuthentication</b> - require authentication to access the log files.
 - <b>virtualFolderName</b> - the name of the folder containing the logs. (This will appear in the web interface)
 - <b>defaultCachingTime</b> - the default time in seconds to cache log results.
+- <b>authentication</b> - require authentication to access the log files.
+  - <b>enabled</b> - set to true to require authentication.
+  - <b>username & password</b> - credentials to log in.
 - <b>logs</b> - log objects need <i>name</i> and <i>command</i> keys, other keys shown are optional. All keys:
   - <b>name</b> - name of the log / log file (any string)
   - <b>command</b> - the command to execute in the shell (any string)
