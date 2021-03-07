@@ -1,6 +1,6 @@
 {
   "name": "new-log",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "main": "./newApp.js",
   "bin": "./bin/index.js",
   "scripts": {
@@ -13,6 +13,12 @@
     "type": "git",
     "url": "https://github.com/open-schnick/NotEnoughWood.git"
   },
+  "keywords": [
+    "logging",
+    "logs",
+    "cli",
+    "tool"
+  ],
   "dependencies": {
     "basic-auth": "^2.0.1",
     "express": "^4.17.1",
