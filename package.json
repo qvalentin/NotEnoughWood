@@ -1,6 +1,6 @@
 {
   "name": "new-log",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "./newApp.js",
   "bin": "./bin/index.js",
   "scripts": {

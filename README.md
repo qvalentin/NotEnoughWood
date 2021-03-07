@@ -43,17 +43,18 @@ npm install -g new-log
 ╚═╝░░╚══╝╚══════╝░░░╚═╝░░░╚═╝░░
 
 Usage
-$ new-log <input>
+  $ new-log <input>
 
 Necessary arguments:
---config, -c  specify the config path
+  --config, -c  specify the config path
 
 Options
---port, -p    specify the port
---folder, -f  specify the folder containing the logs. (By default the current working directory)
+  --port, -p    specify the port
+  --folder, -f  specify the folder containing the logs. (By default the current working directory)
+  --silent, -s  turn of debug messages
 
 Examples
-$ new-log --port 3000 --config ./config.json
+  $ new-log --port 3000 --config ./config.json -s
 ```
 
 ### --config
@@ -104,6 +105,10 @@ Specify a custom port for the web interface. Defaults to port 4200.
 ### --folder
 
 Specify a different directory for the logs (this will contain the folder with the name specified by the <i>virtualFolderName</i> key.
+
+### --silent
+
+Use the --silent / -s flag to disable debugging messages.
 
 ### --help
 

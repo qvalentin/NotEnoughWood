@@ -21,9 +21,10 @@ Necessary arguments:
 Options
   --port, -p    specify the port
   --folder, -f  specify the folder containing the logs. (By default the current working directory)
+  --silent, -s  turn of debug messages
 
 Examples
-  $ new-log --port 3000 --config ./config.json
+  $ new-log --port 3000 --config ./config.json -s
 `,
   {
     flags: {
