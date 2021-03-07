@@ -53,7 +53,7 @@ Options
 --folder, -f  specify the folder containing the logs. (By default the current working directory)
 
 Examples
-$ new --port 3000 --config ./config.json
+$ new-log --port 3000 --config ./config.json
 ```
 
 ### --config
