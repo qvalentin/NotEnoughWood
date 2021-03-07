@@ -40,6 +40,10 @@ Examples
         alias: "c",
         isRequired: true,
       },
+      silent: {
+        type: "string",
+        alias: "s",
+      },
     },
   }
 );

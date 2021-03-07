@@ -6,13 +6,16 @@ const path = require("path");
 const { exit, config } = require("process");
 
 // custom stuff
-const logger = require("./lib/logger");
+const log = require("./lib/logger");
 const { getLogs } = require("./lib/cacheHandler");
 const applyCustomHeader = require("./lib/customHeader");
 
 function newApp(flags) {
   process.title = "NotEnoughWood";
   const app = express();
+
+  // logger is silent?
+  let loggerIsSilent = flags.silent !== undefined;
 
   // handle args
   let port = 4200;
@@ -64,6 +67,12 @@ function newApp(flags) {
     valid = pass === configJson.authentication.password && valid;
 
     return valid;
+  }
+
+  function logger(errorMsg, ...moreMsg) {
+    if (!loggerIsSilent) {
+      log(errorMsg, moreMsg);
+    }
   }
 
   app.get("*", (req, res) => {
