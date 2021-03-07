@@ -1,6 +1,6 @@
 {
   "name": "new-log",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "./newApp.js",
   "bin": "./bin/index.js",
   "scripts": {
@@ -8,6 +8,11 @@
   },
   "author": "open-schnick",
   "license": "MIT",
+  "homepage": "https://github.com/open-schnick/NotEnoughWood",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/open-schnick/NotEnoughWood.git"
+  },
   "dependencies": {
     "basic-auth": "^2.0.1",
     "express": "^4.17.1",

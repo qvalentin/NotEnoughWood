@@ -1,6 +1,6 @@
 # NotEnoughWood - NEW
 
-<i>NotEnoughWood - A simple logger for your commands.</i></br>
+NotEnoughWood - A simple logger for your commands.  
 Show the results of commands in the web. No need for a ssh session to check the log files.
 
 ```shell script
