@@ -1,10 +1,3 @@
-## problems
-
-- refreshing while requesting log leads to double cache entry
-- url encoded path
-
-## Docu (wip)
-
 # NotEnoughWood - NEW
 
 <i>NotEnoughWood - A simple logger for your commands.</i></br>
