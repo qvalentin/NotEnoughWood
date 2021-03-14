@@ -3,14 +3,14 @@ const auth = require("basic-auth");
 const express = require("express");
 const fs = require("fs");
 const path = require("path");
-const { exit, config } = require("process");
+const { exit } = require("process");
 
 // custom stuff
 const log = require("./lib/logger");
 const { getLogs } = require("./lib/cacheHandler");
 const applyCustomHeader = require("./lib/customHeader");
 
-function newApp(flags) {
+function newApp(flags, version) {
   process.title = "NotEnoughWood";
   const app = express();
 
@@ -103,7 +103,8 @@ function newApp(flags) {
                   content,
                   currentLog.name,
                   currentLog.command,
-                  nextUpdate
+                  nextUpdate,
+                  version
                 );
                 res
                   .status(200)
@@ -161,7 +162,9 @@ function newApp(flags) {
   app.listen(port, () => {
     // read config.
     try {
-      configJson = JSON.parse(fs.readFileSync(configPath, "utf-8"));
+      configJson = JSON.parse(
+        fs.readFileSync(path.join(__dirname, configPath), "utf-8")
+      );
 
       if (
         configJson.virtualFolderName === null ||

@@ -1,7 +1,10 @@
 #!/usr/bin/env node
 "use strict";
+const fs = require("fs");
 const meow = require("meow");
+const path = require("path");
 const newApp = require("../newApp");
+const logger = require("../lib/logger");
 
 const cli = meow(
   `
@@ -49,4 +52,15 @@ Examples
   }
 );
 
-newApp(cli.flags);
+// get version
+let foundVersion = "UNKOWN";
+try {
+  const json = fs.readFileSync(path.join(__dirname, "../package.json"));
+  const possibleVersion = JSON.parse(json).version;
+  foundVersion = possibleVersion ? possibleVersion : foundVersion;
+} catch (error) {
+  logger("Couln't find the package.json file.");
+  logger("This might break something.");
+}
+
+newApp(cli.flags, foundVersion);
