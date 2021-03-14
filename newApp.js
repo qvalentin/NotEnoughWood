@@ -116,19 +116,30 @@ function newApp(flags) {
               .catch((err) => {
                 logger(
                   "Encountered Exception while executing",
-                  currentLog.command + " "
+                  currentLog.command
                 );
-                if (MAX_BUFFER_ERROR_MESSAGE === err.toString()) {
-                  res
-                    .status(500)
-                    .send(
-                      "The command returned to much. Consider making the requested data smaller."
-                    );
+                if (err) {
+                  if (MAX_BUFFER_ERROR_MESSAGE === err.toString()) {
+                    res
+                      .status(500)
+                      .send(
+                        "The command returned to much. Consider making the requested data smaller."
+                      );
+                  } else {
+                    res
+                      .status(500)
+                      .send(
+                        "Encountered exception while executing <b>" +
+                          currentLog.command +
+                          "</b></br>" +
+                          err
+                      );
+                  }
                 } else {
                   res
                     .status(500)
                     .send(
-                      "Encountered Exception while executing <b>" +
+                      "Encountered unknown exception while executing <b>" +
                         currentLog.command +
                         "</b></br>" +
                         err
