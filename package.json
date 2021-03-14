@@ -7,7 +7,7 @@
     "start": "node bin/index.js"
   },
   "author": "open-schnick",
-  "license": "MIT",
+  "license": "GPL-3.0",
   "homepage": "https://github.com/open-schnick/NotEnoughWood",
   "repository": {
     "type": "git",
