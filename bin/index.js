@@ -4,7 +4,6 @@ const fs = require("fs");
 const meow = require("meow");
 const path = require("path");
 const newApp = require("../newApp");
-const { warn } = require("../lib/logger");
 
 const cli = meow(
   `
