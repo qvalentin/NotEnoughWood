@@ -34,7 +34,6 @@ npm install -g new-log
 
 ```shell script
 # new-log --help
-
 ███╗░░██╗███████╗░██╗░░░░░░░██╗
 ████╗░██║██╔════╝░██║░░██╗░░██║
 ██╔██╗██║█████╗░░░╚██╗████╗██╔╝
@@ -49,9 +48,10 @@ Necessary arguments:
   --config, -c  specify the config path
 
 Options
-  --port, -p    specify the port
+  --port, -p    specify the port.
   --folder, -f  specify the folder containing the logs. (By default the current working directory)
-  --silent, -s  turn of debug messages
+  --silent, -s  turn of own log messages to stout.
+  --debug, -d   turn on debug log messages.
 
 Examples
   $ new-log --port 3000 --config ./config.json -s
@@ -108,7 +108,11 @@ Specify a different directory for the logs (this will contain the folder with th
 
 ### --silent
 
-Use the --silent / -s flag to disable debugging messages.
+Use the --silent / -s flag to disable logging of own logs to stout.
+
+### --debug
+
+When provided NEW does log additional info to stout
 
 ### --help
 

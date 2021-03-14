@@ -14,9 +14,10 @@ function newApp(flags) {
   process.title = "NotEnoughWood";
   const app = express();
 
-  // logger is silent?
+  // init logger
   let loggerIsSilent = flags.silent !== undefined;
-  initLogger(loggerIsSilent);
+  let loggerIsInDebug = flags.debug !== undefined;
+  initLogger(loggerIsSilent, loggerIsInDebug);
 
   // handle args
   let port = 4200;
@@ -115,7 +116,8 @@ function newApp(flags) {
               .catch((err) => {
                 error(
                   "Encountered Exception while executing",
-                  currentLog.command
+                  currentLog.command,
+                  err
                 );
                 if (err) {
                   if (MAX_BUFFER_ERROR_MESSAGE === err.toString()) {
