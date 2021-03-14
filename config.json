@@ -9,26 +9,26 @@
   "logs": [
     {
       "name": "test",
+      "cachingTime": 3600,
       "source": {
         "type": "command",
         "resource": "npm -v"
-      },
-      "cachingTime": 3600
+      }
     },
     {
       "name": "static file",
       "source": {
         "type": "file",
-        "resource": "/home/open-schnick/Documents/projects/NotEnoughWood/package.json"
+        "resource": "<absolute-path-to-file-here>"
       }
     },
     {
       "name": "whoami",
+      "cachingEnabled": false,
       "source": {
         "type": "command",
         "resource": "whoami"
-      },
-      "cachingEnabled": false
+      }
     },
     {
       "name": "working system",
@@ -48,7 +48,7 @@
       "name": "dummy docker",
       "source": {
         "type": "command",
-        "resource": "docker logs FileFighterREST"
+        "resource": "docker logs <container-name>"
       }
     }
   ]

@@ -1,7 +1,12 @@
 # NotEnoughWood - NEW
 
-NotEnoughWood - A simple logger for your commands.  
+NotEnoughWood - A simple way to access your logs via http/s.  
 Show the results of commands in the web. No need for a ssh session to check the log files.
+
+## Features
+
+- Access the logs of commands, like `docker logs <container-name>`.
+- If the logs are written to disk, you can host these logfiles.
 
 ```shell script
 ███╗░░██╗███████╗░██╗░░░░░░░██╗
@@ -10,13 +15,13 @@ Show the results of commands in the web. No need for a ssh session to check the 
 ██║╚████║██╔══╝░░░░████╔═████║░
 ██║░╚███║███████╗░░╚██╔╝░╚██╔╝░
 ╚═╝░░╚══╝╚══════╝░░░╚═╝░░░╚═╝░░
-NotEnoughWood v1.0.5
+NotEnoughWood v1.1.0
 Created by open-schnick
 
 --------------------------------------
 Logfile: whoami.log
-Command: whoami
-Caching is disabled for this command.
+Source: (Executing) whoami
+Next update in 9 seconds
 --------------------------------------
 
 open-schnick
@@ -61,7 +66,7 @@ Examples
 
 The core work to do to run new is to create a config file</br>
 The config file contains various key to configure the service.</br>
-A sample config file:
+You can find a dummy config file [in the repository](https://github.com/open-schnick/NotEnoughWood/blob/master/config.json) or below.
 
 ```json
 {
@@ -75,13 +80,26 @@ A sample config file:
   "logs": [
     {
       "name": "test",
-      "command": "npm -v",
-      "cachingTime": 3600
+      "cachingTime": 3600,
+      "source": {
+        "type": "command",
+        "resource": "npm -v"
+      }
     },
     {
-      "name": "whoami",
-      "command": "whoami",
-      "cachingEnabled": false
+      "name": "static file",
+      "source": {
+        "type": "file",
+        "resource": "<absolute-path-to-file-here>"
+      }
+    },
+    {
+      "name": "caching disabled",
+      "cachingEnabled": false,
+      "source": {
+        "type": "command",
+        "resource": "whoami"
+      }
     }
   ]
 }
@@ -94,9 +112,11 @@ A sample config file:
   - <b>username & password</b> - credentials to log in.
 - <b>logs</b> - log objects need <i>name</i> and <i>command</i> keys, other keys shown are optional. All keys:
   - <b>name</b> - name of the log / log file (any string)
-  - <b>command</b> - the command to execute in the shell (any string)
   - <b>cachingTime</b> (optional) - custom caching time for the log. Also in seconds (any number)
   - <b>cachingEnabled</b> (optional) - en/disble caching for the log. (any boolean)
+  - <b>source</b> - a JSON object representing the info about the source of the logs
+    - <b>type</b> - a string specifing the type of the log. Avaiable options are <em>file</em> and <em>command</em>.
+    - <b>resource</b> - depending on the <em>type</em> above either the command to execute in the shell, or the absolute path to a static file. (any string)
 
 ### --port
 
