@@ -9,25 +9,47 @@
   "logs": [
     {
       "name": "test",
-      "command": "npm -v",
+      "source": {
+        "type": "command",
+        "resource": "npm -v"
+      },
       "cachingTime": 3600
     },
     {
+      "name": "static file",
+      "source": {
+        "type": "file",
+        "resource": "/home/open-schnick/Documents/projects/NotEnoughWood/package.json"
+      }
+    },
+    {
       "name": "whoami",
-      "command": "whoami",
+      "source": {
+        "type": "command",
+        "resource": "whoami"
+      },
       "cachingEnabled": false
     },
     {
       "name": "working system",
-      "command": "journalctl --this-boot"
+      "source": {
+        "type": "command",
+        "resource": "journalctl --this-boot"
+      }
     },
     {
       "name": "not working system",
-      "command": "journalctl"
+      "source": {
+        "type": "command",
+        "resource": "journalctl"
+      }
     },
     {
       "name": "dummy docker",
-      "command": "docker logs FileFighterREST"
+      "source": {
+        "type": "command",
+        "resource": "docker logs FileFighterREST"
+      }
     }
   ]
 }

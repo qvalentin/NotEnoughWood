@@ -53,7 +53,10 @@ function newApp(flags) {
       let credentials = auth(req);
 
       // Check credentials
-      if (!credentials || !check(credentials.name, credentials.pass)) {
+      if (
+        !credentials ||
+        !check(credentials.name, credentials.pass, configJson)
+      ) {
         res.statusCode = 401;
         res.setHeader("WWW-Authenticate", "Basic realm='NEWloggerRealm'");
         res.end("Access denied");
@@ -64,15 +67,6 @@ function newApp(flags) {
       next();
     }
   });
-
-  function check(name, pass) {
-    var valid = true;
-
-    valid = name === configJson.authentication.username && valid;
-    valid = pass === configJson.authentication.password && valid;
-
-    return valid;
-  }
 
   app.get("*", (req, res) => {
     if (req.url.includes(".log")) {
@@ -91,7 +85,7 @@ function newApp(flags) {
         logs = logs.filter((l) => l.name === foundFileName);
         if (logs != null && logs.length == 1) {
           currentLog = logs[0];
-          if (currentLog.command != null && currentLog.command !== "") {
+          if (currentLog.source != null) {
             getLogs(
               currentLog,
               currentLog.cachingEnabled,
@@ -100,8 +94,7 @@ function newApp(flags) {
               .then(({ content, nextUpdate }) => {
                 content = applyCustomHeader(
                   content,
-                  currentLog.name,
-                  currentLog.command,
+                  currentLog,
                   nextUpdate,
                   version
                 );
@@ -115,8 +108,8 @@ function newApp(flags) {
               })
               .catch((err) => {
                 error(
-                  "Encountered Exception while executing",
-                  currentLog.command,
+                  "Encountered Exception while displaying",
+                  currentLog.name,
                   err
                 );
                 if (err) {
@@ -130,8 +123,8 @@ function newApp(flags) {
                     res
                       .status(500)
                       .send(
-                        "Encountered exception while executing <b>" +
-                          currentLog.command +
+                        "Encountered Exception while displaying<b>" +
+                          currentLog.name +
                           "</b></br>" +
                           err
                       );
@@ -140,16 +133,18 @@ function newApp(flags) {
                   res
                     .status(500)
                     .send(
-                      "Encountered unknown exception while executing <b>" +
-                        currentLog.command +
+                      "Encountered Exception while displaying<b>" +
+                        currentLog.name +
                         "</b></br>" +
                         err
                     );
                 }
               });
+          } else {
+            res.status(404).send("No source for log in config specified.");
           }
         } else {
-          res.status(404).send("Could't find a logfile with this name");
+          res.status(404).send("Could't find a logfile with this name.");
         }
       }
     } else {
@@ -217,6 +212,15 @@ function getVersion() {
     warn("This might break something.");
   }
   return foundVersion;
+}
+
+function check(name, pass, configJson) {
+  var valid = true;
+
+  valid = name === configJson.authentication.username && valid;
+  valid = pass === configJson.authentication.password && valid;
+
+  return valid;
 }
 
 module.exports = newApp;
