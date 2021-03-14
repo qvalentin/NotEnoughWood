@@ -123,7 +123,7 @@ function newApp(flags) {
                     res
                       .status(500)
                       .send(
-                        "Encountered Exception while displaying<b>" +
+                        "Encountered Exception while displaying<b> " +
                           currentLog.name +
                           "</b></br>" +
                           err
@@ -133,7 +133,7 @@ function newApp(flags) {
                   res
                     .status(500)
                     .send(
-                      "Encountered Exception while displaying<b>" +
+                      "Encountered Exception while displaying<b> " +
                         currentLog.name +
                         "</b></br>" +
                         err
