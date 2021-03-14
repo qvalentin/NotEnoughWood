@@ -1,5 +1,8 @@
 # NotEnoughWood - NEW
 
+[![npm](https://img.shields.io/npm/v/new-log?label=version&logo=npm)](https://www.npmjs.com/package/new-log)
+[![npm bundle size](https://img.shields.io/bundlephobia/min/new-log?logo=npm)](https://www.npmjs.com/package/new-log)
+
 NotEnoughWood - A simple way to access your logs via http/s.  
 Show the results of commands in the web. No need for a ssh session to check the log files.
 

@@ -102,8 +102,8 @@ function newApp(flags) {
                   .status(200)
                   .send(
                     "<pre style='word-wrap: break-word; white-space: pre-wrap;'>" +
-                      content +
-                      "</pre>"
+                    content +
+                    "</pre>"
                   );
               })
               .catch((err) => {
@@ -124,9 +124,9 @@ function newApp(flags) {
                       .status(500)
                       .send(
                         "Encountered Exception while displaying<b> " +
-                          currentLog.name +
-                          "</b></br>" +
-                          err
+                        currentLog.name +
+                        "</b></br>" +
+                        err
                       );
                   }
                 } else {
@@ -134,9 +134,9 @@ function newApp(flags) {
                     .status(500)
                     .send(
                       "Encountered Exception while displaying<b> " +
-                        currentLog.name +
-                        "</b></br>" +
-                        err
+                      currentLog.name +
+                      "</b></br>" +
+                      err
                     );
                 }
               });
@@ -169,8 +169,8 @@ function newApp(flags) {
         error("Exiting...");
         exit(1);
       }
-    } catch (error) {
-      error("Config was not valid!");
+    } catch (err) {
+      error("Config was not valid!", err);
       error("Exiting...");
       exit(1);
     }
