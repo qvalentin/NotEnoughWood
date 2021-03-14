@@ -6,16 +6,17 @@ const path = require("path");
 const { exit } = require("process");
 
 // custom stuff
-const log = require("./lib/logger");
+const { initLogger, info, warn, error } = require("./lib/logger");
 const { getLogs } = require("./lib/cacheHandler");
 const applyCustomHeader = require("./lib/customHeader");
 
-function newApp(flags, version) {
+function newApp(flags) {
   process.title = "NotEnoughWood";
   const app = express();
 
   // logger is silent?
   let loggerIsSilent = flags.silent !== undefined;
+  initLogger(loggerIsSilent);
 
   // handle args
   let port = 4200;
@@ -31,6 +32,9 @@ function newApp(flags, version) {
   if (flags.folder != undefined) {
     folderPath = flags.folder;
   }
+
+  // handle version
+  const version = getVersion();
 
   // config
   let configJson = null;
@@ -69,17 +73,11 @@ function newApp(flags, version) {
     return valid;
   }
 
-  function logger(errorMsg, ...moreMsg) {
-    if (!loggerIsSilent) {
-      log(errorMsg, moreMsg);
-    }
-  }
-
   app.get("*", (req, res) => {
     if (req.url.includes(".log")) {
       let foundFileName = req.url.split("/");
       if (foundFileName.length != 2) {
-        logger("did not find foundFileName:", foundFileName);
+        warn("did not find foundFileName:", foundFileName);
         res.sendStatus(404);
       } else {
         //split .log
@@ -115,7 +113,7 @@ function newApp(flags, version) {
                   );
               })
               .catch((err) => {
-                logger(
+                error(
                   "Encountered Exception while executing",
                   currentLog.command
                 );
@@ -170,20 +168,20 @@ function newApp(flags, version) {
         configJson.virtualFolderName === null ||
         configJson.virtualFolderName === undefined
       ) {
-        logger("virtualFolderName was not valid!");
-        logger("Exiting...");
+        error("virtualFolderName was not valid!");
+        error("Exiting...");
         exit(1);
       }
     } catch (error) {
-      logger("Config was not valid!");
-      logger("Exiting...");
+      error("Config was not valid!");
+      error("Exiting...");
       exit(1);
     }
 
     // create fake folder
     if (!fs.existsSync(path.join(folderPath, configJson.virtualFolderName))) {
       fs.mkdir(path.join(folderPath, configJson.virtualFolderName), (err) =>
-        err ? logger("Couldn't create folder:", err) : null
+        err ? warn("Couldn't create folder:", err) : null
       );
     }
 
@@ -201,8 +199,22 @@ function newApp(flags, version) {
         );
       });
     }
-    logger("Started on: http://localhost:" + port);
+    info("Started on: http://localhost:" + port);
   });
+}
+
+function getVersion() {
+  // get version
+  let foundVersion = "UNKOWN";
+  try {
+    const json = fs.readFileSync(path.join(__dirname, "./package.json"));
+    const possibleVersion = JSON.parse(json).version;
+    foundVersion = possibleVersion ? possibleVersion : foundVersion;
+  } catch (error) {
+    warn("Couln't find the package.json file.");
+    warn("This might break something.");
+  }
+  return foundVersion;
 }
 
 module.exports = newApp;
