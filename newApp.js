@@ -155,9 +155,7 @@ function newApp(flags) {
   app.listen(port, () => {
     // read config.
     try {
-      configJson = JSON.parse(
-        fs.readFileSync(path.join(__dirname, configPath), "utf-8")
-      );
+      configJson = JSON.parse(fs.readFileSync(configPath, "utf-8"));
 
       if (
         configJson.virtualFolderName === null ||
