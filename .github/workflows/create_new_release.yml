@@ -1,43 +1,44 @@
 name: Create new release
 
-on: 
+on:
   workflow_dispatch:
     inputs:
       tag:
-        description: 'Tag for new Release'     
+        description: "Tag for new Release"
         required: true
-        default: '1.0.0'
+        default: "1.0.0"
 
 jobs:
   bump-new-version-and-release:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-node@v2.1.5
-    - name: update version in package.json
-      run: node .github/updateVersionInPackageJson.js ${{ github.event.inputs.tag }}
-    - name: push changes
-      uses: actions-x/commit@v2
-      with:
-        email: ${{ secrets.EMAIL }}
-        name: open-schnick
-        message: RELEASE - v${{ github.event.inputs.tag }}
-    - name: create github release
-      uses: meeDamian/github-release@2.0
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        tag: v${{ github.event.inputs.tag }}
-        gzip: false
-        name: V${{ github.event.inputs.tag }}
-        
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2.1.5
+      - name: update version in package.json
+        run: node .github/updateVersionInPackageJson.js ${{ github.event.inputs.tag }}
+      - name: push changes
+        uses: actions-x/commit@v2
+        with:
+          email: ${{ secrets.EMAIL }}
+          name: open-schnick
+          message: RELEASE - v${{ github.event.inputs.tag }}
+      - name: create github release
+        uses: meeDamian/github-release@2.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag: v${{ github.event.inputs.tag }}
+          gzip: false
+          name: V${{ github.event.inputs.tag }}
+          allow_override: true
+
   publish-to-npm:
     needs: [bump-new-version-and-release]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-node@v2.1.5
-    - name: run the script
-      run: |
-        sudo npm i -g npm-cli-login
-        npm-cli-login -u open-schnick -p ${{ secrets.NPM_PW }} -e ${{ secrets.EMAIL }}
-        npm publish
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2.1.5
+      - name: run the script
+        run: |
+          sudo npm i -g npm-cli-login
+          npm-cli-login -u open-schnick -p ${{ secrets.NPM_PW }} -e ${{ secrets.EMAIL }}
+          npm publish
