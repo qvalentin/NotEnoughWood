@@ -37,6 +37,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2.1.5
+      - name: pull changes
+        run: git pull
       - name: get npm lib
         run: sudo npm i -g npm-cli-login
       - name: npm login
