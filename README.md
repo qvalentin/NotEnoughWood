@@ -10,6 +10,7 @@ Show the results of commands in the web. No need for a ssh session to check the 
 
 - Access the logs of commands, like `docker logs <container-name>`.
 - If the logs are written to disk, you can host these logfiles.
+- Use `cURL` to access the service, or add the plain=true query to the url to show the result without html. Like `http://localhost:4200/test.log?plain=true`
 
 ```shell script
 ███╗░░██╗███████╗░██╗░░░░░░░██╗
@@ -62,7 +63,7 @@ Options
   --debug, -d   turn on debug log messages.
 
 Examples
-  $ new-log --port 3000 --config ./config.json -s
+  $ new-log --port 3000 --config ./config.json --silent
 ```
 
 ### --config

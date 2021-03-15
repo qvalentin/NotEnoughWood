@@ -87,7 +87,7 @@ function newApp(flags) {
           currentLog = logs[0];
           if (currentLog.source != null) {
             // check user agent to enable / disable html support for the header.
-            const usePlainText = requestComesFromCurl(req); // this does return true or null
+            const usePlainText = userWantsPlainTextOrComesFromCurl(req); // this does return true or null
 
             getLogs(
               currentLog,
@@ -222,12 +222,14 @@ function check(name, pass, configJson) {
 }
 
 /**
- * Insecure way to check if the request comes from a curl user agent. DO NOT USE THIS FOR SECURITY RELEVANT CODE.
+ * Insecure way to check if the request comes from a curl user agent, or if the param is 'plain=true'. DO NOT USE THIS FOR SECURITY RELEVANT CODE.
  * @param {*} req
  */
-function requestComesFromCurl(req) {
-  const user_agent = req.headers["user-agent"];
-  return user_agent.startsWith("curl/");
+function userWantsPlainTextOrComesFromCurl(req) {
+  const userAgent = req.headers["user-agent"];
+  const userAgentIsCurl = userAgent.startsWith("curl/");
+  const userRequestedIt = req.query.plain === "true";
+  return userAgentIsCurl || userRequestedIt;
 }
 
 module.exports = newApp;
