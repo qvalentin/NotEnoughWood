@@ -37,8 +37,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2.1.5
-      - name: run the script
-        run: |
-          sudo npm i -g npm-cli-login
-          npm-cli-login -u open-schnick -p ${{ secrets.NPM_PW }} -e ${{ secrets.EMAIL }}
-          npm publish
+      - name: get npm lib
+        run: sudo npm i -g npm-cli-login
+      - name: npm login
+        run: npm-cli-login -u open-schnick -p ${{ secrets.NPM_PW }} -e ${{ secrets.EMAIL }}
+      - name: npm publish
+        run: npm publish
