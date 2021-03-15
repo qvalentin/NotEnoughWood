@@ -86,6 +86,9 @@ function newApp(flags) {
         if (logs != null && logs.length == 1) {
           currentLog = logs[0];
           if (currentLog.source != null) {
+            // check user agent to enable / disable html support for the header.
+            const usePlainText = requestComesFromCurl(req); // this does return true or null
+
             getLogs(
               currentLog,
               currentLog.cachingEnabled,
@@ -96,15 +99,10 @@ function newApp(flags) {
                   content,
                   currentLog,
                   nextUpdate,
-                  version
+                  version,
+                  usePlainText
                 );
-                res
-                  .status(200)
-                  .send(
-                    "<pre style='word-wrap: break-word; white-space: pre-wrap;'>" +
-                    content +
-                    "</pre>"
-                  );
+                res.status(200).send(content);
               })
               .catch((err) => {
                 error(
@@ -124,9 +122,9 @@ function newApp(flags) {
                       .status(500)
                       .send(
                         "Encountered Exception while displaying<b> " +
-                        currentLog.name +
-                        "</b></br>" +
-                        err
+                          currentLog.name +
+                          "</b></br>" +
+                          err
                       );
                   }
                 } else {
@@ -134,9 +132,9 @@ function newApp(flags) {
                     .status(500)
                     .send(
                       "Encountered Exception while displaying<b> " +
-                      currentLog.name +
-                      "</b></br>" +
-                      err
+                        currentLog.name +
+                        "</b></br>" +
+                        err
                     );
                 }
               });
@@ -221,6 +219,15 @@ function check(name, pass, configJson) {
   valid = pass === configJson.authentication.password && valid;
 
   return valid;
+}
+
+/**
+ * Insecure way to check if the request comes from a curl user agent. DO NOT USE THIS FOR SECURITY RELEVANT CODE.
+ * @param {*} req
+ */
+function requestComesFromCurl(req) {
+  const user_agent = req.headers["user-agent"];
+  return user_agent.startsWith("curl/");
 }
 
 module.exports = newApp;
