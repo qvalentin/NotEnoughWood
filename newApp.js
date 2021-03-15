@@ -90,13 +90,14 @@ function newApp(flags) {
               currentLog.cachingEnabled,
               configJson.defaultCachingTime
             )
-              .then(({ content, nextUpdate }) => {
+              .then(({ content, nextUpdate, tail_lines }) => {
                 content = applyCustomHeader(
                   content,
                   currentLog,
                   nextUpdate,
                   version,
-                  usePlainText
+                  usePlainText,
+                  tail_lines
                 );
                 res.status(200).send(content);
               })
