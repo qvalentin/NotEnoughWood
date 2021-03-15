@@ -104,6 +104,14 @@ You can find a dummy config file [in the repository](https://github.com/open-sch
         "type": "command",
         "resource": "whoami"
       }
+    },
+    {
+      "name": "to long log",
+      "tail_lines": 100,
+      "source": {
+        "type": "command",
+        "resource": "journalctl"
+      }
     }
   ]
 }
@@ -116,6 +124,7 @@ You can find a dummy config file [in the repository](https://github.com/open-sch
   - <b>username & password</b> - credentials to log in.
 - <b>logs</b> - log objects need <i>name</i> and <i>command</i> keys, other keys shown are optional. All keys:
   - <b>name</b> - name of the log / log file (any string)
+  - <b>tail_lines<b> (optional) - amount of lines to tail for if the source returned too much. (200k bytes) (any number)
   - <b>cachingTime</b> (optional) - custom caching time for the log. Also in seconds (any number)
   - <b>cachingEnabled</b> (optional) - en/disble caching for the log. (any boolean)
   - <b>source</b> - a JSON object representing the info about the source of the logs

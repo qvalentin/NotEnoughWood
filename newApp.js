@@ -40,10 +40,6 @@ function newApp(flags) {
   // config
   let configJson = null;
 
-  // CONSTANTS
-  const MAX_BUFFER_ERROR_MESSAGE =
-    "RangeError [ERR_CHILD_PROCESS_STDIO_MAXBUFFER]: stdout maxBuffer length exceeded";
-
   app.use((req, res, next) => {
     if (
       configJson &&
@@ -111,22 +107,14 @@ function newApp(flags) {
                   err
                 );
                 if (err) {
-                  if (MAX_BUFFER_ERROR_MESSAGE === err.toString()) {
-                    res
-                      .status(500)
-                      .send(
-                        "The command returned to much. Consider making the requested data smaller."
-                      );
-                  } else {
-                    res
-                      .status(500)
-                      .send(
-                        "Encountered Exception while displaying<b> " +
-                          currentLog.name +
-                          "</b></br>" +
-                          err
-                      );
-                  }
+                  res
+                    .status(500)
+                    .send(
+                      "Encountered Exception while displaying<b> " +
+                        currentLog.name +
+                        "</b></br>" +
+                        err
+                    );
                 } else {
                   res
                     .status(500)

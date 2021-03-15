@@ -31,14 +31,15 @@
       }
     },
     {
-      "name": "working system",
+      "name": "neofetch",
       "source": {
         "type": "command",
-        "resource": "journalctl --this-boot"
+        "resource": "neofetch"
       }
     },
     {
-      "name": "not working system",
+      "name": "only working with tail",
+      "tail_lines": 20,
       "source": {
         "type": "command",
         "resource": "journalctl"
