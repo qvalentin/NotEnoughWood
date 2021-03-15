@@ -18,7 +18,7 @@ Show the results of commands in the web. No need for a ssh session to check the 
 ██║╚████║██╔══╝░░░░████╔═████║░
 ██║░╚███║███████╗░░╚██╔╝░╚██╔╝░
 ╚═╝░░╚══╝╚══════╝░░░╚═╝░░░╚═╝░░
-NotEnoughWood v1.1.0
+NotEnoughWood <version>
 Created by open-schnick
 
 --------------------------------------
