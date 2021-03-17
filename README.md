@@ -77,6 +77,7 @@ You can find a dummy config file [in the repository](https://github.com/open-sch
   "virtualFolderName": "Not enough wood!",
   "defaultCachingTime": 10,
   "defaultTailLines": 100,
+  "faviconPath": "https://www.gnu.org/graphics/heckert_gnu.transp.small.png",
   "authentication": {
     "enabled": true,
     "username": "user",
@@ -126,10 +127,11 @@ You can find a dummy config file [in the repository](https://github.com/open-sch
 ```
 
 - <b>virtualFolderName</b> - the name of the folder containing the logs. (This will appear in the web interface)
-- <b>defaultCachingTime</b> - the default time in seconds to cache log results.
+- <b>defaultCachingTime</b> - the default time in seconds to cache log results. (any number)
+- <b>faviconPath</b> - sets the favicon of NEW to the result of an valid url. (valid url)
 - <b>defaultTailLines</b> - the default amount of lines tailed when the log size is too big. (200k bytes) (any number)
 - <b>authentication</b> - require authentication to access the log files.
-  - <b>enabled</b> - set to true to require authentication.
+  - <b>enabled</b> - set to <i>true</i> to require authentication.
   - <b>username & password</b> - credentials to log in.
 - <b>logs</b> - log objects need <i>name</i> and <i>command</i> keys, other keys shown are optional. All keys:
   - <b>name</b> - name of the log / log file (any string)

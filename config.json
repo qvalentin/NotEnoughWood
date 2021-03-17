@@ -2,6 +2,7 @@
   "virtualFolderName": "Not enough wood!",
   "defaultCachingTime": 10,
   "defaultTailLines": 100,
+  "faviconPath": "https://www.gnu.org/graphics/heckert_gnu.transp.small.png",
   "authentication": {
     "enabled": true,
     "username": "user",

@@ -1,4 +1,4 @@
-const handler = require("serve-handler");
+const serveHandler = require("serve-handler");
 const auth = require("basic-auth");
 const express = require("express");
 const fs = require("fs");
@@ -9,6 +9,7 @@ const { exit } = require("process");
 const { initLogger, info, warn, error } = require("./lib/logger");
 const { getLogs } = require("./lib/cacheHandler");
 const applyCustomHeader = require("./lib/customHeader");
+const serveConfigBuilder = require("./lib/serveConfigBuilder");
 
 function newApp(flags) {
   process.title = "NotEnoughWood";
@@ -39,6 +40,9 @@ function newApp(flags) {
 
   // config
   let configJson = null;
+
+  // serve config
+  let serveConfig = null;
 
   app.use((req, res, next) => {
     if (
@@ -136,9 +140,7 @@ function newApp(flags) {
         }
       }
     } else {
-      handler(req, res, {
-        public: path.join(folderPath, configJson.virtualFolderName),
-      });
+      serveHandler(req, res, serveConfig);
     }
   });
 
@@ -182,6 +184,10 @@ function newApp(flags) {
         );
       });
     }
+
+    // build serve config
+    serveConfig = serveConfigBuilder(folderPath, configJson);
+
     info("Started on: http://localhost:" + port);
   });
 }
