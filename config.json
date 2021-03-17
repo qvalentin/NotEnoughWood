@@ -1,6 +1,7 @@
 {
   "virtualFolderName": "Not enough wood!",
   "defaultCachingTime": 10,
+  "defaultTailLines": 100,
   "authentication": {
     "enabled": true,
     "username": "user",
@@ -39,7 +40,7 @@
     },
     {
       "name": "only working with tail",
-      "tail_lines": 20,
+      "tailLines": 20,
       "source": {
         "type": "command",
         "resource": "journalctl"

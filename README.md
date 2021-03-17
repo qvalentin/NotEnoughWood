@@ -76,6 +76,7 @@ You can find a dummy config file [in the repository](https://github.com/open-sch
 {
   "virtualFolderName": "Not enough wood!",
   "defaultCachingTime": 10,
+  "defaultTailLines": 100,
   "authentication": {
     "enabled": true,
     "username": "user",
@@ -106,8 +107,15 @@ You can find a dummy config file [in the repository](https://github.com/open-sch
       }
     },
     {
-      "name": "to long log",
-      "tail_lines": 100,
+      "name": "log is tailed to 20 lines",
+      "tailLines": 20,
+      "source": {
+        "type": "command",
+        "resource": "journalctl"
+      }
+    },
+    {
+      "name": "log is tailed to default 100 lines",
       "source": {
         "type": "command",
         "resource": "journalctl"
@@ -119,12 +127,13 @@ You can find a dummy config file [in the repository](https://github.com/open-sch
 
 - <b>virtualFolderName</b> - the name of the folder containing the logs. (This will appear in the web interface)
 - <b>defaultCachingTime</b> - the default time in seconds to cache log results.
+- <b>defaultTailLines</b> - the default amount of lines tailed when the log size is too big. (200k bytes) (any number)
 - <b>authentication</b> - require authentication to access the log files.
   - <b>enabled</b> - set to true to require authentication.
   - <b>username & password</b> - credentials to log in.
 - <b>logs</b> - log objects need <i>name</i> and <i>command</i> keys, other keys shown are optional. All keys:
   - <b>name</b> - name of the log / log file (any string)
-  - <b>tail_lines<b> (optional) - amount of lines to tail for if the source returned too much. (200k bytes) (any number)
+  - <b>tailLines<b> (optional) - amount of lines to tail for if the source returned too much. (200k bytes) (any number)
   - <b>cachingTime</b> (optional) - custom caching time for the log. Also in seconds (any number)
   - <b>cachingEnabled</b> (optional) - en/disble caching for the log. (any boolean)
   - <b>source</b> - a JSON object representing the info about the source of the logs

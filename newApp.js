@@ -88,23 +88,24 @@ function newApp(flags) {
             getLogs(
               currentLog,
               currentLog.cachingEnabled,
-              configJson.defaultCachingTime
+              configJson.defaultCachingTime,
+              configJson.defaultTailLines
             )
-              .then(({ content, nextUpdate, tail_lines }) => {
+              .then(({ content, nextUpdate, tailLines }) => {
                 content = applyCustomHeader(
                   content,
                   currentLog,
                   nextUpdate,
                   version,
                   usePlainText,
-                  tail_lines
+                  tailLines
                 );
                 res.status(200).send(content);
               })
               .catch((err) => {
                 error(
                   "Encountered Exception while displaying",
-                  currentLog.name,
+                  currentLog.name + ".",
                   err
                 );
                 if (err) {
