@@ -163,11 +163,21 @@ function newApp(flags) {
       exit(1);
     }
 
+    const virtualFolder = path.join(folderPath, configJson.virtualFolderName);
+    // delete folder
+    try {
+      fs.rmdirSync(virtualFolder, { recursive: true });
+    } catch (err) {
+      error(`Error while deleting ${virtualFolder} ${err}.`);
+    }
+
     // create fake folder
-    if (!fs.existsSync(path.join(folderPath, configJson.virtualFolderName))) {
-      fs.mkdir(path.join(folderPath, configJson.virtualFolderName), (err) =>
-        err ? warn("Couldn't create folder:", err) : null
-      );
+    try {
+      if (!fs.existsSync(virtualFolder)) {
+        fs.mkdirSync(virtualFolder);
+      }
+    } catch (err) {
+      error(`Error while creating virtual Folder: ${err}.`);
     }
 
     // create fake logfiles
