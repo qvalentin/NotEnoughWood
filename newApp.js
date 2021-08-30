@@ -88,12 +88,14 @@ function newApp(flags) {
           if (currentLog.source != null) {
             // check user agent to enable / disable html support for the header.
             const usePlainText = userWantsPlainTextOrComesFromCurl(req); // this does return true or null
-
+            const customTailLength = req.query.tail
+            
             getLogs(
               currentLog,
               currentLog.cachingEnabled,
               configJson.defaultCachingTime,
-              configJson.defaultTailLines
+              configJson.defaultTailLines,
+              customTailLength
             )
               .then(({ content, nextUpdate, tailLines }) => {
                 content = applyCustomHeader(
@@ -117,18 +119,18 @@ function newApp(flags) {
                     .status(500)
                     .send(
                       "Encountered Exception while displaying<b> " +
-                        currentLog.name +
-                        "</b></br>" +
-                        err
+                      currentLog.name +
+                      "</b></br>" +
+                      err
                     );
                 } else {
                   res
                     .status(500)
                     .send(
                       "Encountered Exception while displaying<b> " +
-                        currentLog.name +
-                        "</b></br>" +
-                        err
+                      currentLog.name +
+                      "</b></br>" +
+                      err
                     );
                 }
               });
@@ -190,7 +192,7 @@ function newApp(flags) {
             configJson.virtualFolderName,
             log.name + ".log"
           ),
-          "If you are seeing this, something fishy happend."
+          "If you are seeing this in the browser, something fishy happend."
         );
       });
     }
