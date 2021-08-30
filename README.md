@@ -10,7 +10,8 @@ Show the results of commands in the web. No need for a ssh session to check the 
 
 - Access the logs of commands, like `docker logs <container-name>`.
 - If the logs are written to disk, you can host these logfiles.
-- Use `cURL` to access the service, or add the plain=true query to the url to show the result without html. Like `http://localhost:4200/test.log?plain=true`
+- Use `cURL` to access the service, or add the `plain` query to the url to show the result without html. Like `http://localhost:4200/test.log?plain=true`
+- Use the query param `tail` you can specify the lines (from the ending) you want to see. Something Like `http://localhost:4200/test.log?tail=10` means seeing the last 10 lines of the command output.
 
 ```shell script
 ███╗░░██╗███████╗░██╗░░░░░░░██╗
