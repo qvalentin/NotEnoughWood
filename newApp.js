@@ -1,7 +1,7 @@
 const serveHandler = require('serve-handler');
 const auth = require('basic-auth');
-const express = require('express');
 const fs = require('fs');
+const http = require('http');
 const path = require('path');
 const { exit } = require('process');
 
@@ -13,7 +13,6 @@ const serveConfigBuilder = require('./lib/serveConfigBuilder');
 
 function newApp(flags) {
 	process.title = 'NotEnoughWood';
-	const app = express();
 
 	// init logger
 	let loggerIsSilent = flags.silent !== undefined;
@@ -44,7 +43,7 @@ function newApp(flags) {
 	// serve config
 	let serveConfig = null;
 
-	app.use((req, res, next) => {
+	const authHandler = (req, res) => {
 		if (
 			configJson &&
 			configJson.authentication &&
@@ -64,14 +63,14 @@ function newApp(flags) {
 				);
 				res.end('Access denied');
 			} else {
-				next();
+				logHandler(req, res);
 			}
 		} else {
-			next();
+			logHandler(req, res);
 		}
-	});
+	};
 
-	app.get('*', (req, res) => {
+	const logHandler = (req, res) => {
 		if (req.url.includes('.log')) {
 			let foundFileName = req.url.split('/');
 			if (foundFileName.length != 2) {
@@ -148,9 +147,10 @@ function newApp(flags) {
 		} else {
 			serveHandler(req, res, serveConfig);
 		}
-	});
+	};
 
-	app.listen(port, () => {
+	const server = http.createServer(authHandler);
+	server.listen(port, () => {
 		// read config.
 		try {
 			configJson = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
