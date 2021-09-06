@@ -14,8 +14,14 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2.1.5
-      - name: update version in package.json
-        run: node .github/updateVersionInPackageJson.js ${{ github.event.inputs.tag }}
+      - name: install deps
+        run: |
+          npm -g i yarn
+          yarn install
+      - name: version package.json
+        run: |
+          node .github/updateVersionInPackageJson.js ${{ github.event.inputs.tag }}
+          yarn prettier
       - name: push changes
         uses: actions-x/commit@v2
         with:
