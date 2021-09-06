@@ -1,58 +1,58 @@
 {
-  "virtualFolderName": "Not enough wood!",
-  "defaultCachingTime": 10,
-  "defaultTailLines": 100,
-  "faviconPath": "https://www.gnu.org/graphics/heckert_gnu.transp.small.png",
-  "authentication": {
-    "enabled": true,
-    "username": "user",
-    "password": "1234"
-  },
-  "logs": [
-    {
-      "name": "test",
-      "cachingTime": 3600,
-      "source": {
-        "type": "command",
-        "resource": "npm -v"
-      }
-    },
-    {
-      "name": "static file",
-      "source": {
-        "type": "file",
-        "resource": "<absolute-path-to-file-here>"
-      }
-    },
-    {
-      "name": "whoami",
-      "cachingEnabled": false,
-      "source": {
-        "type": "command",
-        "resource": "whoami"
-      }
-    },
-    {
-      "name": "neofetch",
-      "source": {
-        "type": "command",
-        "resource": "neofetch"
-      }
-    },
-    {
-      "name": "only working with tail",
-      "tailLines": 20,
-      "source": {
-        "type": "command",
-        "resource": "journalctl"
-      }
-    },
-    {
-      "name": "dummy docker",
-      "source": {
-        "type": "command",
-        "resource": "docker logs <container-name>"
-      }
-    }
-  ]
+	"virtualFolderName": "Not enough wood!",
+	"defaultCachingTime": 10,
+	"defaultTailLines": 100,
+	"faviconPath": "https://www.gnu.org/graphics/heckert_gnu.transp.small.png",
+	"authentication": {
+		"enabled": true,
+		"username": "user",
+		"password": "1234"
+	},
+	"logs": [
+		{
+			"name": "test",
+			"cachingTime": 3600,
+			"source": {
+				"type": "command",
+				"resource": "npm -v"
+			}
+		},
+		{
+			"name": "static file",
+			"source": {
+				"type": "file",
+				"resource": "<absolute-path-to-file-here>"
+			}
+		},
+		{
+			"name": "whoami",
+			"cachingEnabled": false,
+			"source": {
+				"type": "command",
+				"resource": "whoami"
+			}
+		},
+		{
+			"name": "neofetch",
+			"source": {
+				"type": "command",
+				"resource": "neofetch"
+			}
+		},
+		{
+			"name": "only working with tail",
+			"tailLines": 20,
+			"source": {
+				"type": "command",
+				"resource": "journalctl"
+			}
+		},
+		{
+			"name": "dummy docker",
+			"source": {
+				"type": "command",
+				"resource": "docker logs <container-name>"
+			}
+		}
+	]
 }

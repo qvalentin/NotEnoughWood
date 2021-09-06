@@ -1,12 +1,12 @@
 #!/usr/bin/env node
-"use strict";
-const fs = require("fs");
-const meow = require("meow");
-const path = require("path");
-const newApp = require("../newApp");
+'use strict';
+const fs = require('fs');
+const meow = require('meow');
+const path = require('path');
+const newApp = require('../newApp');
 
 const cli = meow(
-  `
+	`
 ███╗░░██╗███████╗░██╗░░░░░░░██╗
 ████╗░██║██╔════╝░██║░░██╗░░██║
 ██╔██╗██║█████╗░░░╚██╗████╗██╔╝
@@ -29,31 +29,31 @@ Options
 Examples
   $ new-log --port 3000 --config ./config.json -s
 `,
-  {
-    flags: {
-      port: {
-        type: "number",
-        alias: "p",
-      },
-      folder: {
-        type: "string",
-        alias: "f",
-      },
-      config: {
-        type: "string",
-        alias: "c",
-        isRequired: true,
-      },
-      silent: {
-        type: "string",
-        alias: "s",
-      },
-      debug: {
-        type: "string",
-        alias: "-d",
-      },
-    },
-  }
+	{
+		flags: {
+			port: {
+				type: 'number',
+				alias: 'p',
+			},
+			folder: {
+				type: 'string',
+				alias: 'f',
+			},
+			config: {
+				type: 'string',
+				alias: 'c',
+				isRequired: true,
+			},
+			silent: {
+				type: 'string',
+				alias: 's',
+			},
+			debug: {
+				type: 'string',
+				alias: '-d',
+			},
+		},
+	},
 );
 
 newApp(cli.flags);
