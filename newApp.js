@@ -59,9 +59,8 @@ function newApp(flags) {
 				res.setHeader(
 					'WWW-Authenticate',
 					"Basic realm='NEWloggerRealm'",
-				)
-					.writeHead(401)
-					.end('Access denied');
+				);
+				res.writeHead(401).end('Access denied');
 			} else {
 				logHandler(req, res);
 			}
