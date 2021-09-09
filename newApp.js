@@ -56,12 +56,12 @@ function newApp(flags) {
 				!credentials ||
 				!check(credentials.name, credentials.pass, configJson)
 			) {
-				res.statusCode = 401;
 				res.setHeader(
 					'WWW-Authenticate',
 					"Basic realm='NEWloggerRealm'",
-				);
-				res.end('Access denied');
+				)
+					.writeHead(401)
+					.end('Access denied');
 			} else {
 				logHandler(req, res);
 			}
@@ -75,7 +75,7 @@ function newApp(flags) {
 			let foundFileName = req.url.split('/');
 			if (foundFileName.length != 2) {
 				warn('did not find foundFileName:', foundFileName);
-				res.sendStatus(404);
+				res.writeHead(404).end();
 			} else {
 				//split .log
 				foundFileName = foundFileName[1];
@@ -91,7 +91,8 @@ function newApp(flags) {
 						// check user agent to enable / disable html support for the header.
 						const usePlainText =
 							userWantsPlainTextOrComesFromCurl(req); // this does return true or null
-						const customTailLength = req.query.tail;
+						const query = parseQueryParams(req);
+						const customTailLength = query.tail;
 
 						getLogs(
 							currentLog,
@@ -109,7 +110,7 @@ function newApp(flags) {
 									usePlainText,
 									tailLines,
 								);
-								res.status(200).send(content);
+								res.writeHead(200).end(content);
 							})
 							.catch(err => {
 								error(
@@ -118,14 +119,14 @@ function newApp(flags) {
 									err,
 								);
 								if (err) {
-									res.status(500).send(
+									res.writeHead(500).end(
 										'Encountered Exception while displaying<b> ' +
 											currentLog.name +
 											'</b></br>' +
 											err,
 									);
 								} else {
-									res.status(500).send(
+									res.writeHead(500).end(
 										'Encountered Exception while displaying<b> ' +
 											currentLog.name +
 											'</b></br>' +
@@ -134,12 +135,12 @@ function newApp(flags) {
 								}
 							});
 					} else {
-						res.status(404).send(
+						res.writeHead(404).end(
 							'No source for log in config specified.',
 						);
 					}
 				} else {
-					res.status(404).send(
+					res.writeHead(404).end(
 						"Could't find a logfile with this name.",
 					);
 				}
@@ -177,7 +178,7 @@ function newApp(flags) {
 		try {
 			fs.rmdirSync(virtualFolder, { recursive: true });
 		} catch (err) {
-			error(`Error while deleting ${virtualFolder} ${err}.`);
+			error(`Error while deleting ${virtualFolder}`, `${err}.`);
 		}
 
 		// create fake folder
@@ -236,13 +237,35 @@ function check(name, pass, configJson) {
 
 /**
  * Insecure way to check if the request comes from a curl user agent, or if the param is 'plain=true'. DO NOT USE THIS FOR SECURITY RELEVANT CODE.
- * @param {*} req
+ * @param {*} req the request object
+ *
  */
 function userWantsPlainTextOrComesFromCurl(req) {
+	const query = parseQueryParams(req);
 	const userAgent = req.headers['user-agent'];
 	const userAgentIsCurl = userAgent.startsWith('curl/');
-	const userRequestedIt = req.query.plain === 'true';
+	const userRequestedIt = query.plain === 'true';
 	return userAgentIsCurl || userRequestedIt;
+}
+
+/**
+ * very hacky solution to parse query params
+ * @param {*} req the request object
+ *
+ */
+function parseQueryParams(req) {
+	let q = req.url.split('?'),
+		result = {};
+	if (q.length >= 2) {
+		q[1].split('&').forEach(item => {
+			try {
+				result[item.split('=')[0]] = item.split('=')[1];
+			} catch (e) {
+				result[item.split('=')[0]] = '';
+			}
+		});
+	}
+	return result;
 }
 
 module.exports = newApp;
