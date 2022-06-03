@@ -140,7 +140,7 @@ function newApp(flags) {
 					}
 				} else {
 					res.writeHead(404).end(
-						"Could't find a logfile with this name.",
+						"Couldn't find a logfile with this name.",
 					);
 				}
 			}
